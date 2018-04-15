@@ -9,7 +9,9 @@ import com.intellij.openapi.components.ApplicationComponent;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.project.impl.ProjectLifecycleListener;
 import org.jetbrains.annotations.NotNull;
+
 import java.util.Locale;
+import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
 /**
@@ -47,7 +49,11 @@ public class LocaleLanguageManager  implements ApplicationComponent
      */
     public void setResourceBundle(Locale locale)
     {
-        resourceBundle = ResourceBundle.getBundle("HadoopNavigator", locale);
+        try {
+            resourceBundle = ResourceBundle.getBundle("HadoopNavigator", locale);
+        } catch (MissingResourceException e) {
+            resourceBundle = ResourceBundle.getBundle("HadoopNavigator", Locale.US);
+        }
     }
 
     /**
